@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortfolioPro - Login & Registration (HCL Submission)</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.15), transparent 60%), var(--bg-page);
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 480px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-header {
+            padding: 28px 28px 20px 28px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .auth-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2563eb, #06b6d4);
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-surface);
+        }
+
+        .auth-tab-btn {
+            padding: 14px;
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .auth-tab-btn.active {
+            color: var(--brand-primary);
+            background: var(--bg-card);
+            border-bottom-color: var(--brand-primary);
+        }
+
+        .auth-body {
+            padding: 28px;
+        }
+
+        .demo-autofill-box {
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px dashed rgba(59, 130, 246, 0.4);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <div class="auth-logo">PP</div>
+                <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 4px;">PortfolioPro</h2>
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+                    Enterprise Stock Trading & Quantitative Portfolio Management
+                </div>
+                <span class="hcl-badge">HCL Project Submission 2026</span>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">Sign In</button>
+                <button class="auth-tab-btn" id="tabRegisterBtn" onclick="switchAuthTab('register')">Create Account</button>
+            </div>
+
+            <!-- Body -->
+            <div class="auth-body">
+                <!-- 1-Click Demo Login Banner -->
+                <div class="demo-autofill-box" id="demoAutofillBanner">
+                    <div>
+                        <strong style="color: var(--brand-primary);">🎓 HCL Viva Demo Account:</strong>
+                        <div style="color: var(--text-secondary); font-size: 11px;">Username: <code>hcl_student_demo</code></div>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="autoFillDemoLogin()">
+                        Auto-Fill
+                    </button>
+                </div>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Username or Email</label>
+                        <input type="text" class="form-control" id="loginUsername" placeholder="e.g. hcl_student_demo" required autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Enter password..." required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width: 100%; padding: 12px; margin-top: 10px; font-size: 14px;">
+                        Sign In to PortfolioPro
+                    </button>
+                </form>
+
+                <!-- REGISTRATION FORM -->
+                <form id="registerForm" onsubmit="handleRegister(event)" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="regFullName" placeholder="e.g. Aarav Sharma" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Desired Username</label>
+                        <input type="text" class="form-control" id="regUsername" placeholder="e.g. aarav_trade" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="regEmail" placeholder="e.g. aarav@college.edu" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password (min 6 characters)</label>
+                        <input type="password" class="form-control" id="regPassword" placeholder="Create secure password..." minlength="6" required>
+                    </div>
+
+                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 16px;">
+                        💡 <em>New accounts are automatically credited with <strong>₹10,00,000</strong> virtual trading capital and starter portfolio.</em>
+                    </div>
+
+                    <button type="submit" class="btn btn-success" id="regSubmitBtn" style="width: 100%; padding: 12px; font-size: 14px;">
+                        Create Account & Start Trading
+                    </button>
+                </form>
+
+                <div style="margin-top: 24px; text-align: center; font-size: 11px; color: var(--text-muted);">
+                    Developed for HCL Academic Collaboration Capstone • Spring Boot 3 & H2 Database
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Check if already logged in -> redirect to dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            const userStr = localStorage.getItem('portfoliopro_user');
+            if (userStr) {
+                try {
+                    const u = JSON.parse(userStr);
+                    if (u && u.id) {
+                        // Already logged in
+                        window.location.href = 'index.html';
+                    }
+                } catch (e) {}
+            }
+        });
+
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabLoginBtn = document.getElementById('tabLoginBtn');
+            const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+            const demoBanner = document.getElementById('demoAutofillBanner');
+
+            if (tab === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                tabLoginBtn.classList.add('active');
+                tabRegisterBtn.classList.remove('active');
+                demoBanner.style.display = 'flex';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                tabLoginBtn.classList.remove('active');
+                tabRegisterBtn.classList.add('active');
+                demoBanner.style.display = 'none';
+            }
+        }
+
+        function autoFillDemoLogin() {
+            document.getElementById('loginUsername').value = 'hcl_student_demo';
+            document.getElementById('loginPassword').value = 'demo123';
+            showToast('Demo credentials autofilled! Click Sign In.', 'info');
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginSubmitBtn');
+
+            try {
+                btn.disabled = true;
+                btn.textContent = 'Signing in...';
+
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const json = await res.json();
+                if (json.success) {
+                    localStorage.setItem('portfoliopro_user', JSON.stringify(json.data.user));
+                    localStorage.setItem('portfoliopro_token', json.data.token);
+                    showToast('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 800);
+                } else {
+                    showToast(json.message || 'Login failed. Please verify credentials.', 'error');
+                }
+            } catch (err) {
+                showToast('Unable to connect to authentication server.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Sign In to PortfolioPro';
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('regFullName').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const btn = document.getElementById('regSubmitBtn');
+
+            try {
+                btn.disabled = true;
+                btn.textContent = 'Creating Account...';
+
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullName, username, email, password })
+                });
+
+                const json = await res.json();
+                if (json.success) {
+                    localStorage.setItem('portfoliopro_user', JSON.stringify(json.data.user));
+                    localStorage.setItem('portfoliopro_token', json.data.token);
+                    showToast('Account created with ₹10,00,000 capital! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                } else {
+                    showToast(json.message || 'Registration failed. Username or email may already be in use.', 'error');
+                }
+            } catch (err) {
+                showToast('Unable to connect to registration server.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Create Account & Start Trading';
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span style="font-weight:700;">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
