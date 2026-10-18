@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PortfolioPro — Stock Trading & Portfolio Management</title>
+  <meta name="description" content="Enterprise-grade Stock Trading & Quantitative Portfolio Management System built with Java Spring Boot. HCL Academic Capstone Project." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #00d084;
+      --red:   #ff4d4d;
+      --blue:  #4f9eff;
+      --bg:    #0b0f1a;
+      --card:  #131929;
+      --border:#1e2d47;
+      --text:  #e2e8f0;
+      --muted: #7a8ba0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #0b0f1a 0%, #0d1b33 60%, #091520 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(79,158,255,.15), transparent);
+      pointer-events: none;
+    }
+    .ticker-bar {
+      display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 40px; font-size: 13px; font-family: monospace;
+    }
+    .ticker-bar span { display: flex; align-items: center; gap: 6px; }
+    .up   { color: var(--green); }
+    .down { color: var(--red);   }
+
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -1px; }
+    .hero h1 em { font-style: normal; color: var(--blue); }
+    .hero p.sub {
+      margin: 16px auto 0; max-width: 640px;
+      color: var(--muted); font-size: 1.05rem;
+    }
+    .badges { margin: 24px 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .badges img { height: 22px; }
+
+    .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 26px; border-radius: 8px; font-size: 15px;
+      font-weight: 600; text-decoration: none; transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-outline  { border: 1px solid var(--border); color: var(--text); background: transparent; }
+
+    /* ── SECTIONS ── */
+    section { padding: 64px 24px; }
+    .container { max-width: 1080px; margin: 0 auto; }
+    h2 { font-size: 1.7rem; font-weight: 700; margin-bottom: 8px; }
+    .section-sub { color: var(--muted); margin-bottom: 40px; }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color .2s;
+    }
+    .feature-card:hover { border-color: var(--blue); }
+    .feature-card .icon { font-size: 28px; margin-bottom: 12px; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { color: var(--muted); font-size: .9rem; }
+
+    /* ── TECH STACK TABLE ── */
+    .tech-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    .tech-table th, .tech-table td {
+      border: 1px solid var(--border);
+      padding: 12px 16px; text-align: left; font-size: .9rem;
+    }
+    .tech-table th { background: var(--card); color: var(--blue); font-weight: 700; }
+    .tech-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+    /* ── SETUP STEPS ── */
+    .steps { counter-reset: step; display: flex; flex-direction: column; gap: 20px; }
+    .step {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .step-num {
+      counter-increment: step;
+      min-width: 36px; height: 36px;
+      background: var(--blue); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 15px; color: #fff; flex-shrink: 0;
+    }
+    .step-num::before { content: counter(step); }
+    .step-body h4 { font-weight: 700; margin-bottom: 4px; }
+    .step-body p, .step-body code { color: var(--muted); font-size: .9rem; }
+    .step-body code {
+      display: inline-block; background: #0b0f1a;
+      border: 1px solid var(--border); border-radius: 5px;
+      padding: 2px 8px; margin-top: 6px; color: var(--green);
+      font-family: monospace;
+    }
+
+    /* ── PAGES SHOWCASE ── */
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .page-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px;
+      text-decoration: none; color: var(--text);
+      transition: border-color .2s, transform .15s;
+    }
+    .page-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+    .page-card .picon { font-size: 24px; margin-bottom: 10px; }
+    .page-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .page-card p { font-size: .82rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px; text-align: center;
+      color: var(--muted); font-size: .85rem;
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+
+    /* ── DIVIDERS ── */
+    section:nth-child(even) { background: rgba(255,255,255,.012); }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="ticker-bar">
+    <span>HCLTECH <span class="up">▲ ₹1,842.50 +1.23%</span></span>
+    <span>TCS <span class="down">▼ ₹3,612.00 -0.45%</span></span>
+    <span>INFY <span class="up">▲ ₹1,531.75 +0.87%</span></span>
+    <span>RELIANCE <span class="up">▲ ₹2,978.30 +0.32%</span></span>
+    <span>HDFC <span class="down">▼ ₹1,647.00 -0.19%</span></span>
+  </div>
+
+  <h1>🚀 <em>PortfolioPro</em></h1>
+  <p style="font-size:1.15rem;font-weight:600;margin-top:8px;">Stock Trading & Portfolio Management System</p>
+  <p class="sub">Enterprise-grade FinTech platform with real-time Brownian motion market simulation, ACID trade execution, and institutional risk analytics — built on Java Spring Boot.</p>
+
+  <div class="badges">
+    <img src="https://img.shields.io/badge/Java-21%20%2F%2025%20LTS-orange.svg" alt="Java" />
+    <img src="https://img.shields.io/badge/Spring%20Boot-3.3.4-brightgreen.svg" alt="Spring Boot" />
+    <img src="https://img.shields.io/badge/Database-H2%20Persistent%20RDBMS-blue.svg" alt="Database" />
+    <img src="https://img.shields.io/badge/Submission-HCL%20Academic%20Project-purple.svg" alt="HCL" />
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://github.com/2006-Arehan/Portfolio-Pro">
+      ⭐ View on GitHub
+    </a>
+    <a class="btn btn-outline" href="https://github.com/2006-Arehan/Portfolio-Pro/archive/refs/heads/main.zip">
+      📦 Download ZIP
+    </a>
+    <a class="btn btn-outline" href="https://github.com/2006-Arehan/Portfolio-Pro/blob/main/HCL_PROJECT_REPORT.md">
+      📘 HCL Report
+    </a>
+  </div>
+</header>
+
+
+<!-- FEATURES -->
+<section>
+  <div class="container">
+    <h2>🌟 Key Features</h2>
+    <p class="section-sub">Everything built for a real-world FinTech demo & HCL viva evaluation.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon">🔐</div>
+        <h3>Secure Authentication</h3>
+        <p>SHA-256 hashed passwords, 1-click demo autofill (<code>hcl_student_demo / demo123</code>), and ₹10,00,000 virtual capital on sign-up.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h3>Real-Time Market Simulator</h3>
+        <p>Live Brownian motion price engine for 16 Indian & global blue-chip equities — HCLTECH, TCS, Infosys, Reliance, NVIDIA, Apple & more.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💼</div>
+        <h3>ACID Trade Execution</h3>
+        <p>Market & Limit orders with real statutory fees: Flat ₹20 brokerage + 0.1% STT + 18% GST — calculated live before order confirmation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h3>Quantitative Risk Analytics</h3>
+        <p>Institutional-grade metrics: <strong>Sharpe Ratio</strong>, <strong>Portfolio Beta</strong>, and <strong>1-Day 95% Value at Risk (VaR)</strong>.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📜</div>
+        <h3>Immutable Audit Ledger</h3>
+        <p>Complete transaction history with 1-click CSV export and printable statement generation. Every trade permanently recorded.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🌓</div>
+        <h3>Bloomberg-Inspired UI</h3>
+        <p>Glassmorphic FinTech aesthetic with Dark & Light themes, live flashing green/red ticker ribbon, and Chart.js 4.4 visualizations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⭐</div>
+        <h3>Watchlist Management</h3>
+        <p>Pin favorite equities with instant star toggle. Personalized watchlist persisted in the relational database.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎓</div>
+        <h3>1-Click Demo Reset</h3>
+        <p>"↻ Reset Demo" instantly restores ₹10,00,000 wallet + sample holdings — perfect for back-to-back viva demonstrations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PAGES SHOWCASE -->
+<section>
+  <div class="container">
+    <h2>🌐 Application Pages</h2>
+    <p class="section-sub">Four dedicated pages, each purpose-built for a specific workflow.</p>
+    <div class="pages-grid">
+      <a class="page-card" href="https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/login.html">
+        <div class="picon">🔐</div>
+        <h4>Login & Register</h4>
+        <p>Authentication portal with demo autofill for evaluators.</p>
+      </a>
+      <a class="page-card" href="https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/index.html">
+        <div class="picon">📊</div>
+        <h4>Portfolio Analytics</h4>
+        <p>Executive KPIs, net worth curve, sector donut chart, risk matrix.</p>
+      </a>
+      <a class="page-card" href="https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/market.html">
+        <div class="picon">⚡</div>
+        <h4>Market Screener</h4>
+        <p>Live equity screener with real-time price flash & trade modals.</p>
+      </a>
+      <a class="page-card" href="https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/holdings.html">
+        <div class="picon">💼</div>
+        <h4>Equity Holdings</h4>
+        <p>Asset breakdown, avg buy price, unrealized P&L, printable statement.</p>
+      </a>
+      <a class="page-card" href="https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/orders.html">
+        <div class="picon">📜</div>
+        <h4>Order Book & Audit Log</h4>
+        <p>Full transaction ledger with CSV export.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- TECH STACK -->
+<section>
+  <div class="container">
+    <h2>🏗️ Technology Stack</h2>
+    <p class="section-sub">3-tier clean architecture — no shortcuts.</p>
+    <table class="tech-table">
+      <thead>
+        <tr><th>Layer</th><th>Technologies</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Backend</strong></td><td>Java 21/25 LTS, Spring Boot 3.3.4, Spring Web MVC, Spring Data JPA, Hibernate, Bean Validation</td></tr>
+        <tr><td><strong>Database</strong></td><td>H2 Embedded RDBMS (file-persisted at <code>./data/portfoliopro.mv.db</code>), H2 Web Console at <code>/h2-console</code></td></tr>
+        <tr><td><strong>Frontend</strong></td><td>HTML5, CSS3 Glassmorphism, Vanilla JavaScript ES6+, Chart.js 4.4 (Line, Donut, Area charts)</td></tr>
+        <tr><td><strong>Testing</strong></td><td>JUnit 5, Spring Boot Test Suite — 100% passing tests</td></tr>
+        <tr><td><strong>Build</strong></td><td>Apache Maven 3.9+</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- SETUP -->
+<section>
+  <div class="container">
+    <h2>🚀 Quick Start</h2>
+    <p class="section-sub">Running locally in under 60 seconds.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h4>Prerequisites</h4>
+          <p>Install <strong>JDK 17, 21, or 25</strong> and verify with:</p>
+          <code>java -version</code>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h4>Clone the Repository</h4>
+          <code>git clone https://github.com/2006-Arehan/Portfolio-Pro.git</code>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h4>Run (Windows — one click)</h4>
+          <p>Double-click <strong>run_project.bat</strong> — it starts the server and opens the browser automatically.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h4>Run (Maven CLI)</h4>
+          <code>mvn spring-boot:run</code>
+          <p style="margin-top:8px;">Then open <strong>http://localhost:8080</strong></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <h4>Login with Demo Account</h4>
+          <p>Username: <code>hcl_student_demo</code> &nbsp;|&nbsp; Password: <code>demo123</code></p>
+          <p>Or register a new account and get ₹10,00,000 virtual capital instantly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    Built with ❤️ by <a href="https://github.com/2006-Arehan">2006-Arehan</a> &nbsp;·&nbsp;
+    <a href="https://github.com/2006-Arehan/Portfolio-Pro">GitHub Repository</a> &nbsp;·&nbsp;
+    <a href="https://github.com/2006-Arehan/Portfolio-Pro/blob/main/HCL_PROJECT_REPORT.md">HCL Submission Report</a>
+  </p>
+  <p style="margin-top:8px;font-size:.8rem;">Academic Capstone Project · HCL Academic Collaboration Program · FinTech Domain</p>
+</footer>
+
+</body>
+</html>

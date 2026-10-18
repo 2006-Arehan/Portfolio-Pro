@@ -4,7 +4,7 @@
 [![Java](https://img.shields.io/badge/Java-21%20%2F%2025%20LTS-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.4-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Database](https://img.shields.io/badge/Database-H2%20Persistent%20RDBMS-blue.svg)](https://www.h2database.com/)
-[![License](https://img.shields.io/badge/Submission-HCL%20Academic%20Project-purple.svg)]()
+[![License](https://img.shields.io/badge/Submission-HCL%20Academic%20Project-purple.svg)](https://github.com/2006-Arehan/Portfolio-Pro)
 
 ---
 
@@ -18,14 +18,14 @@ It features an institutional-grade FinTech dashboard, a real-time stochastic mar
 ## 🌟 Key Features
 
 - **🔐 Secure User Authentication & Onboarding:**
-  - Dedicated **Login & Registration Portal** ([`login.html`](file:///C:/Users/DELL/.gemini/antigravity/scratch/portfoliopro/src/main/resources/static/login.html)) with SHA-256 password hashing.
+  - Dedicated **Login & Registration Portal** ([`login.html`](https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/login.html)) with SHA-256 password hashing.
   - **1-Click Demo Credentials Autofill** (`hcl_student_demo` / `demo123`) for viva evaluation.
   - Automatic credit of **₹10,00,000** virtual capital for every newly registered trader.
 - **🌐 Dedicated Multi-Page FinTech Architecture:**
-  - **📊 Portfolio Analytics** ([`index.html`](file:///C:/Users/DELL/.gemini/antigravity/scratch/portfoliopro/src/main/resources/static/index.html)): Executive KPIs, Net worth growth curve, sector donut chart, institutional risk matrix.
-  - **⚡ Market Screener & Terminal** ([`market.html`](file:///C:/Users/DELL/.gemini/antigravity/scratch/portfoliopro/src/main/resources/static/market.html)): Full-width live equity screener with real-time Brownian motion price flashing, interactive charts, and instant trade modals.
-  - **💼 Equity Holdings** ([`holdings.html`](file:///C:/Users/DELL/.gemini/antigravity/scratch/portfoliopro/src/main/resources/static/holdings.html)): Asset breakdown, average buy price, current valuation, unrealized returns, and printable statement generation.
-  - **📜 Order Book & Audit Log** ([`orders.html`](file:///C:/Users/DELL/.gemini/antigravity/scratch/portfoliopro/src/main/resources/static/orders.html)): Transaction audit ledger with 1-click CSV export.
+  - **📊 Portfolio Analytics** ([`index.html`](https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/index.html)): Executive KPIs, Net worth growth curve, sector donut chart, institutional risk matrix.
+  - **⚡ Market Screener & Terminal** ([`market.html`](https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/market.html)): Full-width live equity screener with real-time Brownian motion price flashing, interactive charts, and instant trade modals.
+  - **💼 Equity Holdings** ([`holdings.html`](https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/holdings.html)): Asset breakdown, average buy price, current valuation, unrealized returns, and printable statement generation.
+  - **📜 Order Book & Audit Log** ([`orders.html`](https://github.com/2006-Arehan/Portfolio-Pro/blob/main/src/main/resources/static/orders.html)): Transaction audit ledger with 1-click CSV export.
 - **⚡ Real-Time Market Feed & Simulator:** Live Brownian motion price simulation for 16 Indian & Global blue-chip equities (highlighting **HCL Technologies**, TCS, Infosys, Reliance, HDFC Bank, Tata Motors, Apple, NVIDIA, and Microsoft).
 - **💼 Interactive Trading Terminal:** Execute Market and Limit orders with instant statutory fee breakdowns: Flat ₹20 Brokerage + 0.1% STT + 18% GST on brokerage.
 - **📊 Quantitative Portfolio Analytics:**
@@ -161,7 +161,7 @@ When presenting this project to HCL evaluators, follow this recommended walkthro
 
 1. **Dashboard Overview:** Point out the live ticker ribbon at the top, showing real-time price fluctuations.
 2. **Flagship Equity:** Show `HCL Technologies Ltd.` (HCLTECH) prominently listed with real market metrics.
-3. **Interactive Trading:** 
+3. **Interactive Trading:**
    - Click "Trade" on any stock (e.g., HCLTECH).
    - Enter quantity 10.
    - Point out the **real-time statutory fee calculation** (Flat ₹20 brokerage, 0.1% STT, 18% GST).
