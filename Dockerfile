@@ -11,4 +11,5 @@ FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/portfoliopro-1.0.0-SNAPSHOT.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-Dserver.port=${PORT:-8080}", "-jar", "app.jar"]
+# Shell form so $PORT env var is expanded correctly at runtime
+CMD ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar app.jar"]
