@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PortfolioPro - Login & Registration (HCL Submission)</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
     <style>
         .auth-container {
@@ -235,9 +235,28 @@
             const password = document.getElementById('loginPassword').value;
             const btn = document.getElementById('loginSubmitBtn');
 
+            const isGitHubPages = window.location.hostname.includes('github.io');
+
             try {
                 btn.disabled = true;
                 btn.textContent = 'Signing in...';
+
+                if (isGitHubPages) {
+                    const demoUser = {
+                        id: 1,
+                        username: username || 'hcl_student_demo',
+                        fullName: (username === 'hcl_student_demo' || !username) ? 'Aarav Sharma (HCL Candidate)' : username,
+                        email: (username || 'aarav') + '@hclproject.edu',
+                        cashBalance: 481547.44,
+                        initialCapital: 1000000.0,
+                        totalRealizedPnl: 271.67
+                    };
+                    localStorage.setItem('portfoliopro_user', JSON.stringify(demoUser));
+                    localStorage.setItem('portfoliopro_token', 'PP-DEMO-AUTH-TOKEN');
+                    showToast('Login successful! Redirecting...', 'success');
+                    setTimeout(() => { window.location.href = 'index.html'; }, 700);
+                    return;
+                }
 
                 const res = await fetch('/api/auth/login', {
                     method: 'POST',
@@ -257,7 +276,20 @@
                     showToast(json.message || 'Login failed. Please verify credentials.', 'error');
                 }
             } catch (err) {
-                showToast('Unable to connect to authentication server.', 'error');
+                // If backend is unreachable (e.g. static host), fallback to demo session
+                const demoUser = {
+                    id: 1,
+                    username: username || 'hcl_student_demo',
+                    fullName: 'Aarav Sharma (HCL Candidate)',
+                    email: 'aarav.sharma@hclproject.edu',
+                    cashBalance: 481547.44,
+                    initialCapital: 1000000.0,
+                    totalRealizedPnl: 271.67
+                };
+                localStorage.setItem('portfoliopro_user', JSON.stringify(demoUser));
+                localStorage.setItem('portfoliopro_token', 'PP-DEMO-AUTH-TOKEN');
+                showToast('Signed in via Offline/GitHub Demo Mode! Redirecting...', 'success');
+                setTimeout(() => { window.location.href = 'index.html'; }, 800);
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Sign In to PortfolioPro';
@@ -272,9 +304,28 @@
             const password = document.getElementById('regPassword').value;
             const btn = document.getElementById('regSubmitBtn');
 
+            const isGitHubPages = window.location.hostname.includes('github.io');
+
             try {
                 btn.disabled = true;
                 btn.textContent = 'Creating Account...';
+
+                if (isGitHubPages) {
+                    const newUser = {
+                        id: Date.now(),
+                        username: username,
+                        fullName: fullName,
+                        email: email,
+                        cashBalance: 1000000.0,
+                        initialCapital: 1000000.0,
+                        totalRealizedPnl: 0.0
+                    };
+                    localStorage.setItem('portfoliopro_user', JSON.stringify(newUser));
+                    localStorage.setItem('portfoliopro_token', 'PP-DEMO-AUTH-TOKEN');
+                    showToast('Account created with ₹10,00,000 capital! Redirecting...', 'success');
+                    setTimeout(() => { window.location.href = 'index.html'; }, 800);
+                    return;
+                }
 
                 const res = await fetch('/api/auth/register', {
                     method: 'POST',
@@ -294,7 +345,19 @@
                     showToast(json.message || 'Registration failed. Username or email may already be in use.', 'error');
                 }
             } catch (err) {
-                showToast('Unable to connect to registration server.', 'error');
+                const newUser = {
+                    id: Date.now(),
+                    username: username,
+                    fullName: fullName,
+                    email: email,
+                    cashBalance: 1000000.0,
+                    initialCapital: 1000000.0,
+                    totalRealizedPnl: 0.0
+                };
+                localStorage.setItem('portfoliopro_user', JSON.stringify(newUser));
+                localStorage.setItem('portfoliopro_token', 'PP-DEMO-AUTH-TOKEN');
+                showToast('Account created via Demo Mode! Redirecting...', 'success');
+                setTimeout(() => { window.location.href = 'index.html'; }, 800);
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Create Account & Start Trading';
