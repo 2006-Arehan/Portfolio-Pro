@@ -10,6 +10,6 @@ RUN mvn clean package -DskipTests -B
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/portfoliopro-1.0.0-SNAPSHOT.jar app.jar
-EXPOSE 8080
+EXPOSE 7860
 # Shell form so $PORT env var is expanded correctly at runtime
-CMD ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar app.jar"]
+CMD ["sh", "-c", "java -Dserver.port=${PORT:-7860} -jar app.jar"]
